@@ -1,7 +1,7 @@
 <script>
 import {onMount,createEventDispatcher} from 'svelte';
 
-export let startColor ="#FF0000";
+export let startColor = {r: 255, g: 255, b:255};
 
 onMount(() => {
  document.addEventListener("mouseup", mouseUp);
@@ -29,20 +29,7 @@ let hexValue = '#FF0000';
 
 
 function setStartColor() {
-  let hex = startColor.replace('#','');
-  if (hex.length !== 6 && hex.length !== 3 && !hex.match(/([^A-F0-9])/gi)) {
-    alert('Invalid property value (startColor)');
-    return;
-  }
-  let hexFiltered='';
-  if (hex.length === 3)
-    hex.split('').forEach( c => {hexFiltered += c+c;});
-  else
-    hexFiltered=hex;
-  hexValue = hexFiltered;
-  r = parseInt(hexFiltered.substring(0,2), 16);
-  g = parseInt(hexFiltered.substring(2,4), 16);
-  b = parseInt(hexFiltered.substring(4,6), 16);
+  const {r, g, b} = startColor;
   rgbToHSV(r,g,b,true);
   updateCsPicker();
   updateHuePicker();
